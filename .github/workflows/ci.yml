@@ -1,0 +1,29 @@
+name: CI Demo
+
+# push（コードの送信）または pull_request が起きた時に起動
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest # 仮想実行環境
+
+    steps:
+      # 1. リポジトリのコードを仮想環境に取得
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Pythonのセットアップ
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      # 3. テストの実行（pytestをインストールして実行）
+      - name: Run tests
+        run: |
+          pip install pytest
+          pytest
